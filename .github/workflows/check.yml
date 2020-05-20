@@ -69,7 +69,11 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Unit tests
-        run: yarn test
+        run: |
+          cp ./ormconfig.dev.json ./ormconfig.json
+          yarn test
 
       - name: E2E tests
-        run: yarn test:e2e
+        run: |
+          cp ./ormconfig.dev.json ./ormconfig.json
+          yarn test:e2e
