@@ -1,0 +1,30 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NODE_VERSION }}'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx semantic-release
