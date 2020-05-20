@@ -1,0 +1,75 @@
+name: Checks
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NODE_VERSION }}'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NODE_VERSION }}'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn validate:ts
+
+      - name: Build
+        run: yarn build
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NODE_VERSION }}'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Unit tests
+        run: yarn test
+
+      - name: E2E tests
+        run: yarn test:e2e
