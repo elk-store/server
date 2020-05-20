@@ -65,11 +65,18 @@ jobs:
         with:
           node-version: '${{ steps.nvm.outputs.NODE_VERSION }}'
 
+      - name: Initialize database
+        run: yarn db:up
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: Unit tests
-        run: yarn test
+        run: |
+          cp ./ormconfig.dev.json ./ormconfig.json
+          yarn test
 
       - name: E2E tests
-        run: yarn test:e2e
+        run: |
+          cp ./ormconfig.dev.json ./ormconfig.json
+          yarn test:e2e
