@@ -14,7 +14,7 @@ export class UserPayment {
   public cardNumber: number;
 
   @Column()
-  public expireDate: Date;
+  public expireAt: Date;
 
   @ManyToOne(
     () => User,
