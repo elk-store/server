@@ -9,7 +9,7 @@ import {
 
 import { Size } from './product.interface';
 
-@Entity('products')
+@Entity()
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
