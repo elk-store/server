@@ -11,7 +11,11 @@ export class ProductService {
     private productRepository: ProductRepository
   ) {}
 
-  public async findProducts(): Promise<Product[]> {
-    return await this.productRepository.findProducts();
+  public async findAll(): Promise<Product[]> {
+    return await this.productRepository.findAll();
+  }
+
+  public async findById(id: string): Promise<Product> {
+    return await this.productRepository.findById(id);
   }
 }

@@ -1,10 +1,10 @@
-import { Repository, Entity, EntityRepository } from 'typeorm';
+import { Repository, EntityRepository } from 'typeorm';
 
 import { Product } from './product.entity';
 
 @EntityRepository(Product)
 export class ProductRepository extends Repository<Product> {
-  public async findProducts(): Promise<Product[]> {
+  public async findAll(): Promise<Product[]> {
     return await this.find();
   }
 
