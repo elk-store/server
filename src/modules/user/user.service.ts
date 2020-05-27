@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
+import { Repository } from 'typeorm';
 
 import { UserDTO } from './user.dto';
 import { User } from './user.entity';
 import { RulePermission, Status } from './user.interface';
-import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository
+    @InjectRepository(User) private userRepository: Repository<User>
   ) {}
 
   public async signUp(payload: UserDTO): Promise<User> {
@@ -27,7 +26,7 @@ export class UserService {
     user.rulePermission = RulePermission.basic;
     user.status = Status.active;
 
-    return this.userRepository.persist(user);
+    return this.userRepository.save(user);
   }
 
   private async hashPassword(password: string, salt: string): Promise<string> {
