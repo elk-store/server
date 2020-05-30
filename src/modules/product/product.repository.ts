@@ -11,4 +11,8 @@ export class ProductRepository extends Repository<Product> {
   public async findById(id: string): Promise<Product> {
     return await this.findOneOrFail(id);
   }
+
+  public async persist(product: Product): Promise<Product> {
+    return await this.save(product);
+  }
 }

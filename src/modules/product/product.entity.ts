@@ -7,8 +7,6 @@ import {
   BaseEntity,
 } from 'typeorm';
 
-import { Size } from './product.interface';
-
 @Entity()
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -17,7 +15,7 @@ export class Product extends BaseEntity {
   @Column()
   public name: string;
 
-  @Column()
+  @Column('decimal')
   public price: number;
 
   @Column()
@@ -32,8 +30,8 @@ export class Product extends BaseEntity {
   @Column('simple-array')
   public pictures: string[];
 
-  @Column('enum', { enum: Size })
-  public size: Size;
+  @Column('simple-array')
+  public sizes: number[];
 
   @CreateDateColumn()
   public createdAt: Date;
