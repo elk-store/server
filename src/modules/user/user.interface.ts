@@ -1,9 +1,9 @@
-export enum RulePermission {
-  basic = 0,
-  administrator = 1,
+export enum UserRole {
+  REGULAR = 'REGULAR',
+  ADMINISTRATOR = 'ADMINISTRATOR',
 }
 
 export enum Status {
-  inactive = 0,
-  active = 1,
+  INACTIVE = 'INACTIVE',
+  ACTIVE = 'ACTIVE',
 }

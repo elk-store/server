@@ -73,10 +73,6 @@ jobs:
 
       - name: Unit tests
         run: |
+          cp ./.env.sample ./.env
           cp ./ormconfig.dev.json ./ormconfig.json
           yarn test
-
-      - name: E2E tests
-        run: |
-          cp ./ormconfig.dev.json ./ormconfig.json
-          yarn test:e2e

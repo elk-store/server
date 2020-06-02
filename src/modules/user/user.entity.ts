@@ -1,43 +1,51 @@
+import * as bcrypt from 'bcryptjs';
+import { Exclude } from 'class-transformer';
 import {
   Entity,
+  BaseEntity,
   PrimaryGeneratedColumn,
   Column,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
 
 import { UserAddress } from '../address/user-address.entity';
 import { UserPayment } from '../payment/user-payment.entity';
-import { RulePermission, Status } from './user.interface';
+import { Status, UserRole } from './user.interface';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column()
-  public name: string;
-
-  @Column()
+  @Column({ unique: true })
   public email: string;
 
+  @Exclude()
+  @Column()
+  public salt: string;
+
+  @Exclude()
   @Column()
   public password: string;
 
   @Column()
+  public name: string;
+
+  @Column({ unique: true })
   public cpf: string;
 
   @Column()
   public birthdate: Date;
 
   @Column()
-  public phone: number;
+  public phone: string;
 
-  @Column('enum', { enum: RulePermission })
-  public rulePermission: RulePermission;
+  @Column()
+  public role: UserRole;
 
-  @Column('enum', { enum: Status })
+  @Column()
   public status: Status;
 
   @OneToMany(
@@ -57,4 +65,10 @@ export class User {
 
   @UpdateDateColumn()
   public updatedAt: Date;
+
+  async hasCorrectPassword(password: string): Promise<boolean> {
+    const hash = await bcrypt.hash(password, this.salt);
+
+    return hash === this.password;
+  }
 }
