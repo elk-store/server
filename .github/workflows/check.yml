@@ -73,5 +73,6 @@ jobs:
 
       - name: Unit tests
         run: |
+          cp ./.env.sample ./.env
           cp ./ormconfig.dev.json ./ormconfig.json
           yarn test
