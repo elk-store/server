@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 
 import { UserDTO } from './user.dto';
 import { User } from './user.entity';
-import { RulePermission, Status } from './user.interface';
+import { UserRole, Status } from './user.interface';
 
 @Injectable()
 export class UserService {
@@ -23,13 +23,21 @@ export class UserService {
     user.cpf = payload.cpf;
     user.birthdate = payload.birthdate;
     user.phone = payload.phone;
-    user.rulePermission = RulePermission.basic;
-    user.status = Status.active;
+    user.role = UserRole.REGULAR;
+    user.status = Status.ACTIVE;
 
     return this.userRepository.save(user);
   }
 
-  private async hashPassword(password: string, salt: string): Promise<string> {
-    return await bcrypt.hash(password, salt);
+  public findByEmail(email: string): Promise<User> {
+    return this.userRepository.findOneOrFail({ email });
+  }
+
+  public findAll(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  private hashPassword(password: string, salt: string): Promise<string> {
+    return bcrypt.hash(password, salt);
   }
 }

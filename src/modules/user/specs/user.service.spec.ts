@@ -39,8 +39,8 @@ describe('User controller tests', () => {
     expect(savedUser).toEqual('User saved!');
     expect(repository.save).toBeCalledWith(
       Object.assign(userData, {
-        rulePermission: 0,
-        status: 1,
+        role: 'REGULAR',
+        status: 'ACTIVE',
         salt: '$2a$10$0kQu/4H4DIKAwfLySk0Sfe',
         password:
           '$2a$10$0kQu/4H4DIKAwfLySk0SfeK1uTSFFErjOf4duxReQ3RsZUnIyi.0S',

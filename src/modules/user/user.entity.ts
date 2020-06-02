@@ -12,7 +12,7 @@ import {
 
 import { UserAddress } from '../address/user-address.entity';
 import { UserPayment } from '../payment/user-payment.entity';
-import { RulePermission, Status } from './user.interface';
+import { Status, UserRole } from './user.interface';
 
 @Entity()
 export class User extends BaseEntity {
@@ -42,10 +42,10 @@ export class User extends BaseEntity {
   @Column()
   public phone: string;
 
-  @Column('enum', { enum: RulePermission })
-  public rulePermission: RulePermission;
+  @Column()
+  public role: UserRole;
 
-  @Column('enum', { enum: Status })
+  @Column()
   public status: Status;
 
   @OneToMany(
