@@ -1,5 +1,4 @@
 import { Test } from '@nestjs/testing';
-import { In, LessThanOrEqual, Like, MoreThanOrEqual } from 'typeorm';
 
 import { ProductRepository } from '../product.repository';
 import { ProductBuilder } from './product.spec-helper';
@@ -23,7 +22,7 @@ describe('ProductRepository', () => {
   });
 
   describe('persist', () => {
-    it('should persist an User', async () => {
+    it('should persist a product', async () => {
       productRepository.persist.mockResolvedValue(ProductBuilder);
 
       await productRepository.persist(ProductBuilder);
@@ -46,7 +45,7 @@ describe('ProductRepository', () => {
   });
 
   describe('deleteById', () => {
-    it('should find a product', async () => {
+    it('should delete a product', async () => {
       productRepository.deleteById.mockResolvedValue(ProductBuilder);
 
       expect(productRepository.deleteById).not.toHaveBeenCalled();
