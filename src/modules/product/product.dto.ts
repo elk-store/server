@@ -4,7 +4,7 @@ import { Size } from './product.interface';
 
 export class ProductDTO {
   @IsString()
-  name: string;
+  public name: string;
 
   @IsNumber()
   public price: number;

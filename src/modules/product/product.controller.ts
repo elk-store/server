@@ -6,6 +6,7 @@ import {
   Post,
   Body,
   Put,
+  Delete,
 } from '@nestjs/common';
 
 import { ProductDTO } from './product.dto';
@@ -37,5 +38,10 @@ export class ProductController {
     @Body() productUpdateRequest: ProductDTO
   ): Promise<Product> {
     return this.productService.update(productUpdateRequest, id);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseUUIDPipe) id: string) {
+    return this.productService.delete(id);
   }
 }

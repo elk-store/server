@@ -15,4 +15,8 @@ export class ProductRepository extends Repository<Product> {
   public async persist(product: Product): Promise<Product> {
     return await this.save(product);
   }
+
+  public async deleteById(id: string): Promise<any> {
+    return await this.delete(id);
+  }
 }

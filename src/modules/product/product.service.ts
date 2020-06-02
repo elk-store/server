@@ -34,4 +34,8 @@ export class ProductService {
     product.id = id;
     return await this.productRepository.persist(product);
   }
+
+  public async delete(id: string): Promise<string> {
+    return await this.productRepository.deleteById(id);
+  }
 }
