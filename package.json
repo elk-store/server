@@ -12,7 +12,7 @@
     "db:up": "cp ormconfig.dev.json ormconfig.json && docker-compose up -d",
     "db:down": "docker-compose down",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "cp .env.sample .env && nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
