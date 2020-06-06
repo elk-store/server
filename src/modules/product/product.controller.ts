@@ -3,12 +3,18 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  UseGuards,
   Post,
   Body,
   Put,
   Delete,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
+import { RequiredRoles } from '../../core/auth/required-roles.decorator';
+import { UserRole } from '../user/user.interface';
 import { ProductDTO } from './product.dto';
 import { Product } from './product.entity';
 import { ProductService } from './product.service';
@@ -27,21 +33,39 @@ export class ProductController {
     return this.productService.findById(id);
   }
 
+  @UseGuards(AuthGuard())
+  @RequiredRoles(UserRole.ADMINISTRATOR)
   @Post()
   create(@Body() productRequest: ProductDTO): Promise<Product> {
-    return this.productService.create(productRequest);
+    try {
+      return this.productService.create(productRequest);
+    } catch (error) {
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
   }
 
+  @UseGuards(AuthGuard())
+  @RequiredRoles(UserRole.ADMINISTRATOR)
   @Put(':id')
   update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() productUpdateRequest: ProductDTO
   ): Promise<Product> {
-    return this.productService.update(productUpdateRequest, id);
+    try {
+      return this.productService.update(productUpdateRequest, id);
+    } catch (error) {
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
   }
 
+  @UseGuards(AuthGuard())
+  @RequiredRoles(UserRole.ADMINISTRATOR)
   @Delete(':id')
   delete(@Param('id', ParseUUIDPipe) id: string) {
-    return this.productService.delete(id);
+    try {
+      return this.productService.delete(id);
+    } catch (error) {
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
   }
 }
