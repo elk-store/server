@@ -8,8 +8,6 @@ import {
   Body,
   Put,
   Delete,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
