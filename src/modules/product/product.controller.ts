@@ -37,11 +37,7 @@ export class ProductController {
   @RequiredRoles(UserRole.ADMINISTRATOR)
   @Post()
   create(@Body() productRequest: ProductDTO): Promise<Product> {
-    try {
-      return this.productService.create(productRequest);
-    } catch (error) {
-      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    }
+    return this.productService.create(productRequest);
   }
 
   @UseGuards(AuthGuard())
@@ -51,21 +47,13 @@ export class ProductController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() productUpdateRequest: ProductDTO
   ): Promise<Product> {
-    try {
-      return this.productService.update(productUpdateRequest, id);
-    } catch (error) {
-      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    }
+    return this.productService.update(productUpdateRequest, id);
   }
 
   @UseGuards(AuthGuard())
   @RequiredRoles(UserRole.ADMINISTRATOR)
   @Delete(':id')
   delete(@Param('id', ParseUUIDPipe) id: string) {
-    try {
-      return this.productService.delete(id);
-    } catch (error) {
-      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    }
+    return this.productService.delete(id);
   }
 }
