@@ -19,10 +19,7 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('Elk. Stoke')
     .setVersion('1.0')
-    .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-      'session'
-    )
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
     .addTag('auth')
     .addTag('user')
     .build();
