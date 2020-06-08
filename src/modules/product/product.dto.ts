@@ -22,5 +22,5 @@ export class ProductDTO {
   public pictures: Set<string>;
 
   @IsEnum(Size, { each: true })
-  public size: Set<number>;
+  public size: Set<string>;
 }
