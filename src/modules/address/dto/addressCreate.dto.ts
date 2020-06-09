@@ -1,4 +1,4 @@
-import { IsString, IsNumber, MinLength, IsEmail } from 'class-validator';
+import { IsString, IsNumber, IsEmail } from 'class-validator';
 
 export class AddressCreateDTO {
   @IsString()
