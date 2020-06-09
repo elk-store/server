@@ -59,15 +59,15 @@ export class AddressService {
     queryBuilder.where('address.id IS NOT NULL');
 
     if (!isNullOrUndefined(addressSearch.addressId)) {
-      queryBuilder.andWhere('address.id = :id', {
-        id: addressSearch.addressId,
+      queryBuilder.andWhere('address.id = :addressId', {
+        addressId: addressSearch.addressId,
       });
     }
 
     if (!isNullOrUndefined(addressSearch.userId)) {
       queryBuilder.leftJoin('address.user', 'user');
-      queryBuilder.andWhere('address.user.id = :id', {
-        id: addressSearch.userId,
+      queryBuilder.andWhere('address.user.id = :userId', {
+        userId: addressSearch.userId,
       });
     }
 
