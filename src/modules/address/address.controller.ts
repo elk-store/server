@@ -24,7 +24,7 @@ import { AddressSearchDTO } from './dto/addressSearch.dto';
 import { UserAddress } from './user-address.entity';
 
 @Controller('address')
-export class AddressContoller {
+export class AddressController {
   constructor(
     private addressService: AddressService,
     private userService: UserService
