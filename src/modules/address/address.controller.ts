@@ -7,12 +7,14 @@ import {
   Session,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { plainToClass } from 'class-transformer';
 import { isEmpty } from 'class-validator';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { JwtPayload } from 'src/core/auth/auth.interface';
 
 import { UserService } from '../user/user.service';
 import { AddressService } from './address.service';
+import { AddressResponseDTO } from './dto/addressResponse.dto';
 import { AddressSearchDTO } from './dto/addressSearch.dto';
 import { UserAddress } from './user-address.entity';
 
@@ -28,14 +30,15 @@ export class AddressContoller {
   public async get(
     @Session() user: JwtPayload,
     @Param('addressId') id: string
-  ): Promise<UserAddress> {
+  ): Promise<AddressResponseDTO> {
     const currentUser = await this.userService.findByEmail(user.email);
 
     const searchDto = new AddressSearchDTO();
     searchDto.addressId = id;
     searchDto.userId = currentUser.id;
 
-    return this.addressService.find(searchDto);
+    const address = await this.addressService.find(searchDto);
+    return plainToClass(AddressResponseDTO, address);
   }
 
   @UseGuards(AuthGuard())
@@ -51,7 +54,7 @@ export class AddressContoller {
     @Query('order') order: string = null,
     @Query('page') page = 1,
     @Query('limit') limit = 10
-  ): Promise<Pagination<UserAddress>> {
+  ): Promise<Pagination<AddressResponseDTO>> {
     const currentUser = await this.userService.findByEmail(user.email);
 
     const searchDto = new AddressSearchDTO();
@@ -68,10 +71,20 @@ export class AddressContoller {
       searchDto.orders = order.split(',');
     }
 
-    return this.addressService.paginate(searchDto, {
+    const results = await this.addressService.paginate(searchDto, {
       page,
       limit,
       route: '/address',
     });
+
+    return new Pagination(
+      await Promise.all(
+        results.items.map(async (item: UserAddress) => {
+          return plainToClass(AddressResponseDTO, item);
+        })
+      ),
+      results.meta,
+      results.links
+    );
   }
 }
