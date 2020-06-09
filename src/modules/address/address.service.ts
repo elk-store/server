@@ -1,5 +1,3 @@
-import { isNullOrUndefined } from 'util';
-
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -63,54 +61,54 @@ export class AddressService {
     const queryBuilder = this.addressRepository.createQueryBuilder('address');
     queryBuilder.where('address.id IS NOT NULL');
 
-    if (!isNullOrUndefined(addressSearch.addressId)) {
+    if (addressSearch.addressId !== null && addressSearch.addressId !== undefined) {
       queryBuilder.andWhere('address.id = :addressId', {
         addressId: addressSearch.addressId,
       });
     }
 
-    if (!isNullOrUndefined(addressSearch.userId)) {
+    if (addressSearch.userId !== null && addressSearch.userId !== undefined) {
       queryBuilder.leftJoin('address.user', 'user');
       queryBuilder.andWhere('address.user.id = :userId', {
         userId: addressSearch.userId,
       });
     }
 
-    if (!isNullOrUndefined(addressSearch.cep)) {
+    if (addressSearch.cep !== null && addressSearch.cep !== undefined) {
       queryBuilder.andWhere('address.cep = :cep', { cep: addressSearch.cep });
     }
 
-    if (!isNullOrUndefined(addressSearch.city)) {
+    if (addressSearch.city !== null && addressSearch.city !== undefined) {
       queryBuilder.andWhere('address.city ilike :city', {
         city: '%' + addressSearch.city + '%',
       });
     }
 
-    if (!isNullOrUndefined(addressSearch.district)) {
+    if (addressSearch.district !== null && addressSearch.district !== undefined) {
       queryBuilder.andWhere('address.district ilike :district', {
         district: '%' + addressSearch.district + '%',
       });
     }
 
-    if (!isNullOrUndefined(addressSearch.number)) {
+    if (addressSearch.number !== null && addressSearch.number !== undefined) {
       queryBuilder.andWhere('address.number = :number', {
         number: addressSearch.number,
       });
     }
 
-    if (!isNullOrUndefined(addressSearch.state)) {
+    if (addressSearch.state !== null && addressSearch.state !== undefined) {
       queryBuilder.andWhere('address.state ilike :state', {
         state: '%' + addressSearch.state + '%',
       });
     }
 
-    if (!isNullOrUndefined(addressSearch.street)) {
+    if (addressSearch.street !== null && addressSearch.street !== undefined) {
       queryBuilder.andWhere('address.street ilike :street', {
         street: '%' + addressSearch.street + '%',
       });
     }
 
-    if (!isNullOrUndefined(addressSearch.orders)) {
+    if (addressSearch.orders !== null && addressSearch.orders !== undefined) {
       addressSearch.orders.forEach(order => {
         if (order.startsWith('-')) {
           order = order.replace('-', '');
