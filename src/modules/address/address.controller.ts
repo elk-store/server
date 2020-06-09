@@ -7,12 +7,14 @@ import {
   Session,
   Post,
   Body,
+  Delete,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { plainToClass } from 'class-transformer';
 import { isEmpty } from 'class-validator';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { JwtPayload } from 'src/core/auth/auth.interface';
+import { DeleteResult } from 'typeorm';
 
 import { UserService } from '../user/user.service';
 import { AddressService } from './address.service';
@@ -37,6 +39,15 @@ export class AddressContoller {
     createDto.userEmail = user.email;
     const address = await this.addressService.create(createDto);
     return plainToClass(AddressResponseDTO, address);
+  }
+
+  @UseGuards(AuthGuard())
+  @Delete(':id')
+  public delete(
+    @Session() user: JwtPayload,
+    @Param('id') id
+  ): Promise<DeleteResult> {
+    return this.addressService.delete(user.email, id);
   }
 
   @UseGuards(AuthGuard())

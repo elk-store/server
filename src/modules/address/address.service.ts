@@ -7,7 +7,7 @@ import {
   Pagination,
   IPaginationOptions,
 } from 'nestjs-typeorm-paginate';
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import { Repository, SelectQueryBuilder, DeleteResult } from 'typeorm';
 
 import { UserService } from '../user/user.service';
 import { AddressCreateDTO } from './dto/addressCreate.dto';
@@ -36,6 +36,14 @@ export class AddressService {
     address.user = user;
 
     return this.addressRepository.save(address);
+  }
+
+  public async delete(
+    userEmail: string,
+    addressId: string
+  ): Promise<DeleteResult> {
+    const currentUser = await this.userService.findByEmail(userEmail);
+    return this.addressRepository.delete({ id: addressId, user: currentUser });
   }
 
   public find(addressSearch: AddressSearchDTO): Promise<UserAddress> {
