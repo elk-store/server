@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AddressModule } from './address/address.module';
+import { AddressModule } from './address/user-address.module';
 import { PaymentModule } from './payment/payment.module';
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';

@@ -1,6 +1,6 @@
 {
   "name": "@elk/server",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "repository": "git@github.com:elk-store/server.git",
   "author": "Henrique de Castilhos <henrique@castilhos.dev>",
   "license": "MIT",
@@ -33,6 +33,7 @@
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
+    "nestjs-typeorm-paginate": "^2.0.3",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "pg": "^8.2.1",
