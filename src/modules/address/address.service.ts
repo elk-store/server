@@ -109,9 +109,10 @@ export class AddressService {
       addressSearch.orders.forEach(order => {
         if (order.startsWith('-')) {
           order = order.replace('-', '');
-          queryBuilder.addOrderBy(order, 'DESC');
+          queryBuilder.addOrderBy('address.' + order, 'DESC');
+        } else {
+          queryBuilder.addOrderBy('address.' + order, 'ASC');
         }
-        queryBuilder.addOrderBy(order, 'ASC');
       });
     }
 

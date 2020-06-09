@@ -27,7 +27,7 @@ export class AddressContoller {
   @Get(':addressId')
   public async get(
     @Session() user: JwtPayload,
-    @Param('addressId') id
+    @Param('addressId') id: string
   ): Promise<UserAddress> {
     const currentUser = await this.userService.findByEmail(user.email);
 
@@ -64,6 +64,7 @@ export class AddressContoller {
     searchDto.state = state;
 
     if (!isEmpty(order)) {
+      order = order.replace(' ', '');
       searchDto.orders = order.split(',');
     }
 
