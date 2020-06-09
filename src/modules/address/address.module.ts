@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/core/auth/auth.module';
 
 import { UserModule } from '../user/user.module';
-import { AddressContoller } from './address.controller';
+import { AddressController } from './address.controller';
 import { AddressService } from './address.service';
 import { UserAddress } from './user-address.entity';
 
@@ -13,7 +13,7 @@ import { UserAddress } from './user-address.entity';
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
   ],
-  controllers: [AddressContoller],
+  controllers: [AddressController],
   providers: [AddressService],
   exports: [AddressService],
 })
