@@ -7020,6 +7020,11 @@ nerf-dart@^1.0.0:
   resolved "https://registry.yarnpkg.com/nerf-dart/-/nerf-dart-1.0.0.tgz#e6dab7febf5ad816ea81cf5c629c5a0ebde72c1a"
   integrity sha1-5tq3/r9a2Bbqgc9cYpxaDr3nLBo=
 
+nestjs-typeorm-paginate@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/nestjs-typeorm-paginate/-/nestjs-typeorm-paginate-2.0.3.tgz#62443a344400817d99a7bbdd048ed2938390d8db"
+  integrity sha512-cGIVwdIrZuDO5kHSVTcYRyFAjyxbg2dn/YFp9l+/xhsQl9XZkvcfXtqoo32T/h5bUmztdS4GJMoUYwo7TF30Eg==
+
 next-tick@1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
