@@ -59,7 +59,9 @@ export class AddressService {
     queryBuilder.where('address.id IS NOT NULL');
 
     if (!isNullOrUndefined(addressSearch.addressId)) {
-      queryBuilder.where('address.id = :id', { id: addressSearch.addressId });
+      queryBuilder.andWhere('address.id = :id', {
+        id: addressSearch.addressId,
+      });
     }
 
     if (!isNullOrUndefined(addressSearch.userId)) {
