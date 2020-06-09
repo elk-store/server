@@ -81,14 +81,14 @@ export class AddressService {
     }
 
     if (!isNullOrUndefined(addressSearch.city)) {
-      queryBuilder.andWhere('address.city like %:city%', {
-        city: addressSearch.city,
+      queryBuilder.andWhere('address.city ilike :city', {
+        city: '%' + addressSearch.city + '%',
       });
     }
 
     if (!isNullOrUndefined(addressSearch.district)) {
-      queryBuilder.andWhere('address.district like %:district%', {
-        district: addressSearch.district,
+      queryBuilder.andWhere('address.district ilike :district', {
+        district: '%' + addressSearch.district + '%',
       });
     }
 
@@ -99,14 +99,14 @@ export class AddressService {
     }
 
     if (!isNullOrUndefined(addressSearch.state)) {
-      queryBuilder.andWhere('address.state like %:state%', {
-        state: addressSearch.state,
+      queryBuilder.andWhere('address.state ilike :state', {
+        state: '%' + addressSearch.state + '%',
       });
     }
 
     if (!isNullOrUndefined(addressSearch.street)) {
-      queryBuilder.andWhere('address.street like %:street%', {
-        street: addressSearch.street,
+      queryBuilder.andWhere('address.street ilike :street', {
+        street: '%' + addressSearch.street + '%',
       });
     }
 
