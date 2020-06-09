@@ -17,16 +17,16 @@ import { JwtPayload } from 'src/core/auth/auth.interface';
 import { DeleteResult } from 'typeorm';
 
 import { UserService } from '../user/user.service';
-import { AddressService } from './address.service';
-import { AddressCreateDTO } from './dto/addressCreate.dto';
-import { AddressResponseDTO } from './dto/addressResponse.dto';
-import { AddressSearchDTO } from './dto/addressSearch.dto';
+import { UserAddressCreateDTO } from './dto/user-address-create.dto';
+import { UserAddressResponseDTO } from './dto/user-address-response.dto';
+import { UserAddressSearchDTO } from './dto/user-address-search.dto';
 import { UserAddress } from './user-address.entity';
+import { UserAddressService } from './user-address.service';
 
 @Controller('address')
-export class AddressController {
+export class UserAddressController {
   constructor(
-    private addressService: AddressService,
+    private addressService: UserAddressService,
     private userService: UserService
   ) {}
 
@@ -34,11 +34,11 @@ export class AddressController {
   @Post()
   public async create(
     @Session() user: JwtPayload,
-    @Body() createDto: AddressCreateDTO
-  ): Promise<AddressResponseDTO> {
+    @Body() createDto: UserAddressCreateDTO
+  ): Promise<UserAddressResponseDTO> {
     createDto.userEmail = user.email;
     const address = await this.addressService.create(createDto);
-    return plainToClass(AddressResponseDTO, address);
+    return plainToClass(UserAddressResponseDTO, address);
   }
 
   @UseGuards(AuthGuard())
@@ -55,15 +55,15 @@ export class AddressController {
   public async get(
     @Session() user: JwtPayload,
     @Param('addressId') id: string
-  ): Promise<AddressResponseDTO> {
+  ): Promise<UserAddressResponseDTO> {
     const currentUser = await this.userService.findByEmail(user.email);
 
-    const searchDto = new AddressSearchDTO();
+    const searchDto = new UserAddressSearchDTO();
     searchDto.addressId = id;
     searchDto.userId = currentUser.id;
 
     const address = await this.addressService.find(searchDto);
-    return plainToClass(AddressResponseDTO, address);
+    return plainToClass(UserAddressResponseDTO, address);
   }
 
   @UseGuards(AuthGuard())
@@ -79,10 +79,10 @@ export class AddressController {
     @Query('order') order: string = null,
     @Query('page') page = 1,
     @Query('limit') limit = 10
-  ): Promise<Pagination<AddressResponseDTO>> {
+  ): Promise<Pagination<UserAddressResponseDTO>> {
     const currentUser = await this.userService.findByEmail(user.email);
 
-    const searchDto = new AddressSearchDTO();
+    const searchDto = new UserAddressSearchDTO();
     searchDto.userId = currentUser.id;
     searchDto.street = street;
     searchDto.number = number;
@@ -105,7 +105,7 @@ export class AddressController {
     return new Pagination(
       await Promise.all(
         results.items.map(async (item: UserAddress) => {
-          return plainToClass(AddressResponseDTO, item);
+          return plainToClass(UserAddressResponseDTO, item);
         })
       ),
       results.meta,

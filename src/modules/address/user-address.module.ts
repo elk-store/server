@@ -3,9 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/core/auth/auth.module';
 
 import { UserModule } from '../user/user.module';
-import { AddressController } from './address.controller';
-import { AddressService } from './address.service';
+import { UserAddressController } from './user-address.controller';
 import { UserAddress } from './user-address.entity';
+import { UserAddressService } from './user-address.service';
 
 @Module({
   imports: [
@@ -13,8 +13,8 @@ import { UserAddress } from './user-address.entity';
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
   ],
-  controllers: [AddressController],
-  providers: [AddressService],
-  exports: [AddressService],
+  controllers: [UserAddressController],
+  providers: [UserAddressService],
+  exports: [UserAddressService],
 })
 export class AddressModule {}

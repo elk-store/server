@@ -8,19 +8,21 @@ import {
 import { Repository, SelectQueryBuilder, DeleteResult } from 'typeorm';
 
 import { UserService } from '../user/user.service';
-import { AddressCreateDTO } from './dto/addressCreate.dto';
-import { AddressSearchDTO } from './dto/addressSearch.dto';
+import { UserAddressCreateDTO } from './dto/user-address-create.dto';
+import { UserAddressSearchDTO } from './dto/user-address-search.dto';
 import { UserAddress } from './user-address.entity';
 
 @Injectable()
-export class AddressService {
+export class UserAddressService {
   constructor(
     @InjectRepository(UserAddress)
     private addressRepository: Repository<UserAddress>,
     private userService: UserService
   ) {}
 
-  public async create(addressCreate: AddressCreateDTO): Promise<UserAddress> {
+  public async create(
+    addressCreate: UserAddressCreateDTO
+  ): Promise<UserAddress> {
     const user = await this.userService.findByEmail(addressCreate.userEmail);
     const address = new UserAddress();
 
@@ -44,24 +46,27 @@ export class AddressService {
     return this.addressRepository.delete({ id: addressId, user: currentUser });
   }
 
-  public find(addressSearch: AddressSearchDTO): Promise<UserAddress> {
+  public find(addressSearch: UserAddressSearchDTO): Promise<UserAddress> {
     return this.queryBuilder(addressSearch).getOne();
   }
 
   public paginate(
-    addressSearch: AddressSearchDTO,
+    addressSearch: UserAddressSearchDTO,
     options: IPaginationOptions
   ): Promise<Pagination<UserAddress>> {
     return paginate<UserAddress>(this.queryBuilder(addressSearch), options);
   }
 
   private queryBuilder(
-    addressSearch: AddressSearchDTO
+    addressSearch: UserAddressSearchDTO
   ): SelectQueryBuilder<UserAddress> {
     const queryBuilder = this.addressRepository.createQueryBuilder('address');
     queryBuilder.where('address.id IS NOT NULL');
 
-    if (addressSearch.addressId !== null && addressSearch.addressId !== undefined) {
+    if (
+      addressSearch.addressId !== null &&
+      addressSearch.addressId !== undefined
+    ) {
       queryBuilder.andWhere('address.id = :addressId', {
         addressId: addressSearch.addressId,
       });
@@ -84,7 +89,10 @@ export class AddressService {
       });
     }
 
-    if (addressSearch.district !== null && addressSearch.district !== undefined) {
+    if (
+      addressSearch.district !== null &&
+      addressSearch.district !== undefined
+    ) {
       queryBuilder.andWhere('address.district ilike :district', {
         district: '%' + addressSearch.district + '%',
       });

@@ -1,4 +1,4 @@
-export class AddressSearchDTO {
+export class UserAddressSearchDTO {
   public addressId: string;
   public userId: string;
   public street: string;
