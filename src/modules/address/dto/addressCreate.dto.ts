@@ -1,6 +1,10 @@
-import { IsString, IsNumber, MinLength } from 'class-validator';
+import { IsString, IsNumber, MinLength, IsEmail } from 'class-validator';
 
 export class AddressCreateDTO {
+  @IsString()
+  @IsEmail()
+  public userEmail: string;
+
   @IsString()
   public name: string;
 
@@ -14,7 +18,6 @@ export class AddressCreateDTO {
   public district: string;
 
   @IsNumber()
-  @MinLength(8)
   public cep: number;
 
   @IsString()

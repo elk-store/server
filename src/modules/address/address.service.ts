@@ -22,11 +22,8 @@ export class AddressService {
     private userService: UserService
   ) {}
 
-  public async create(
-    currentUserEmail: string,
-    addressCreate: AddressCreateDTO
-  ): Promise<UserAddress> {
-    const currentUser = await this.userService.findByEmail(currentUserEmail);
+  public async create(addressCreate: AddressCreateDTO): Promise<UserAddress> {
+    const user = await this.userService.findByEmail(addressCreate.userEmail);
     const address = new UserAddress();
 
     address.cep = addressCreate.cep;
@@ -36,9 +33,9 @@ export class AddressService {
     address.number = addressCreate.number;
     address.state = addressCreate.state;
     address.street = addressCreate.street;
-    address.user = currentUser;
+    address.user = user;
 
-    return address;
+    return this.addressRepository.save(address);
   }
 
   public find(addressSearch: AddressSearchDTO): Promise<UserAddress> {

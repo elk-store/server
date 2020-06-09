@@ -5,6 +5,8 @@ import {
   Param,
   UseGuards,
   Session,
+  Post,
+  Body,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { plainToClass } from 'class-transformer';
@@ -14,6 +16,7 @@ import { JwtPayload } from 'src/core/auth/auth.interface';
 
 import { UserService } from '../user/user.service';
 import { AddressService } from './address.service';
+import { AddressCreateDTO } from './dto/addressCreate.dto';
 import { AddressResponseDTO } from './dto/addressResponse.dto';
 import { AddressSearchDTO } from './dto/addressSearch.dto';
 import { UserAddress } from './user-address.entity';
@@ -24,6 +27,17 @@ export class AddressContoller {
     private addressService: AddressService,
     private userService: UserService
   ) {}
+
+  @UseGuards(AuthGuard())
+  @Post()
+  public async create(
+    @Session() user: JwtPayload,
+    @Body() createDto: AddressCreateDTO
+  ): Promise<AddressResponseDTO> {
+    createDto.userEmail = user.email;
+    const address = await this.addressService.create(createDto);
+    return plainToClass(AddressResponseDTO, address);
+  }
 
   @UseGuards(AuthGuard())
   @Get(':addressId')
