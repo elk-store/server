@@ -18,8 +18,8 @@ import { plainToClass } from 'class-transformer';
 import { JwtPayload } from '../../core/auth/auth.interface';
 import { RequiredRoles } from '../../core/auth/required-roles.decorator';
 import { RolesGuard } from '../../core/auth/roles.guard';
-import { UserCreateDTO } from './dtos/userCreate.dto';
-import { UserResponseDTO } from './dtos/userResponse.dto';
+import { UserCreateDTO } from './dtos/user-create.dto';
+import { UserResponseDTO } from './dtos/user-response.dto';
 import { UserRole } from './user.interface';
 import { UserService } from './user.service';
 

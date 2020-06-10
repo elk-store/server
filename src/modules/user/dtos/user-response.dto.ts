@@ -1,9 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose, Exclude, Type } from 'class-transformer';
+import { Expose, Exclude } from 'class-transformer';
 
 import { UserRole, Status } from '../user.interface';
-import { UserAddressResponseDTO } from './userAddressResponse.dto';
-import { UserPaymentResponseDTO } from './userPaymentResponse.dto';
 
 @Exclude()
 export class UserResponseDTO {
@@ -56,22 +54,6 @@ export class UserResponseDTO {
   })
   @Expose()
   readonly status: Status;
-
-  @ApiProperty({
-    description: 'The user adresses',
-    type: UserAddressResponseDTO,
-  })
-  @Type(() => UserAddressResponseDTO)
-  @Expose()
-  readonly userAddress: UserAddressResponseDTO[];
-
-  @ApiProperty({
-    description: 'The user payments methods',
-    type: UserPaymentResponseDTO,
-  })
-  @Type(() => UserPaymentResponseDTO)
-  @Expose()
-  readonly userPayment: UserPaymentResponseDTO[];
 
   @ApiProperty({
     description: 'Creation date',

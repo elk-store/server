@@ -1,6 +1,6 @@
 import { makeFactory } from 'factory.ts';
 
-import { UserCreateDTO } from '../dtos/userCreate.dto';
+import { UserCreateDTO } from '../dtos/user-create.dto';
 
 export const UserBuilder = makeFactory<UserCreateDTO>({
   birthdate: new Date(Date.UTC(2000, 1, 1)),
