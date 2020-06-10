@@ -23,8 +23,8 @@ import { DeleteResult } from 'typeorm';
 
 import { RequiredRoles } from '../../core/auth/required-roles.decorator';
 import { UserRole } from '../user/user.interface';
+import { ProductCreateDTO } from './dtos/product-create.dto';
 import { ProductResponseDTO } from './dtos/product-response.dto';
-import { ProductDTO } from './product.dto';
 import { ProductService } from './product.service';
 
 @ApiTags('Products')
@@ -65,12 +65,12 @@ export class ProductController {
     status: 201,
     type: ProductResponseDTO,
   })
-  @ApiBody({ type: ProductDTO })
+  @ApiBody({ type: ProductCreateDTO })
   @UseGuards(AuthGuard())
   @RequiredRoles(UserRole.ADMINISTRATOR)
   @Post()
   public async create(
-    @Body() productRequest: ProductDTO
+    @Body() productRequest: ProductCreateDTO
   ): Promise<ProductResponseDTO> {
     const product = await this.productService.create(productRequest);
     return plainToClass(ProductResponseDTO, product);
@@ -87,13 +87,13 @@ export class ProductController {
     description: 'Product id',
     required: true,
   })
-  @ApiBody({ type: ProductDTO })
+  @ApiBody({ type: ProductCreateDTO })
   @UseGuards(AuthGuard())
   @RequiredRoles(UserRole.ADMINISTRATOR)
   @Put(':id')
   public async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() productUpdateRequest: ProductDTO
+    @Body() productUpdateRequest: ProductCreateDTO
   ): Promise<ProductResponseDTO> {
     const product = await this.productService.update(productUpdateRequest, id);
     return plainToClass(ProductResponseDTO, product);
