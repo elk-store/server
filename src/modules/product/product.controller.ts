@@ -10,6 +10,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
 import { DeleteResult } from 'typeorm';
 
@@ -24,6 +32,11 @@ import { ProductService } from './product.service';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
+  @ApiOperation({ summary: 'List all products' })
+  @ApiResponse({
+    status: 200,
+    type: ProductResponseDTO,
+  })
   @Get()
   public async findAll(): Promise<ProductResponseDTO[]> {
     const allProducts = await this.productService.findAll();
@@ -32,20 +45,49 @@ export class ProductController {
     });
   }
 
+  @ApiOperation({ summary: 'List information of a specific product' })
+  @ApiResponse({
+    status: 200,
+    type: ProductResponseDTO,
+  })
+  @ApiParam({ name: 'id', description: 'Product id', required: true })
   @Get(':id')
-  public async findById(@Param('id', ParseUUIDPipe) id: string): Promise<ProductResponseDTO> {
+  public async findById(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<ProductResponseDTO> {
     const product = this.productService.findById(id);
     return plainToClass(ProductResponseDTO, product);
   }
 
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Create a new product' })
+  @ApiResponse({
+    status: 201,
+    type: ProductResponseDTO,
+  })
+  @ApiBody({ type: ProductDTO })
   @UseGuards(AuthGuard())
   @RequiredRoles(UserRole.ADMINISTRATOR)
   @Post()
-  public async create(@Body() productRequest: ProductDTO): Promise<ProductResponseDTO> {
+  public async create(
+    @Body() productRequest: ProductDTO
+  ): Promise<ProductResponseDTO> {
     const product = await this.productService.create(productRequest);
     return plainToClass(ProductResponseDTO, product);
   }
 
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update a product information' })
+  @ApiResponse({
+    status: 200,
+    type: ProductResponseDTO,
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Product id',
+    required: true,
+  })
+  @ApiBody({ type: ProductDTO })
   @UseGuards(AuthGuard())
   @RequiredRoles(UserRole.ADMINISTRATOR)
   @Put(':id')
@@ -57,6 +99,16 @@ export class ProductController {
     return plainToClass(ProductResponseDTO, product);
   }
 
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete a specific product' })
+  @ApiResponse({
+    status: 204,
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Product id',
+    required: true,
+  })
   @UseGuards(AuthGuard())
   @RequiredRoles(UserRole.ADMINISTRATOR)
   @Delete(':id')
