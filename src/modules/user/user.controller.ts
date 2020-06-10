@@ -23,7 +23,7 @@ import { UserResponseDTO } from './dtos/user-response.dto';
 import { UserRole } from './user.interface';
 import { UserService } from './user.service';
 
-@ApiTags('user')
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}

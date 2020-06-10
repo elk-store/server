@@ -20,9 +20,9 @@ async function bootstrap() {
     .setTitle('Elk. Store')
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
-    .addTag('auth')
-    .addTag('user')
-    .addTag('address')
+    .addTag('Auth', 'User authentication')
+    .addTag('User', 'User management')
+    .addTag('Address', 'Address management')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
