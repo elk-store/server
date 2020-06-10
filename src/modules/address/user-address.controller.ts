@@ -10,6 +10,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
 import { isEmpty } from 'class-validator';
 import { Pagination } from 'nestjs-typeorm-paginate';
@@ -23,6 +24,7 @@ import { UserAddressSearchDTO } from './dto/user-address-search.dto';
 import { UserAddress } from './user-address.entity';
 import { UserAddressService } from './user-address.service';
 
+@ApiTags('address')
 @Controller('address')
 export class UserAddressController {
   constructor(
