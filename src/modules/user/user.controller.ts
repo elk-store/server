@@ -12,6 +12,7 @@ import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
+  ApiBody,
 } from '@nestjs/swagger';
 import { plainToClass } from 'class-transformer';
 
@@ -33,6 +34,11 @@ export class UserController {
     status: 201,
     type: UserResponseDTO,
   })
+  @ApiBody({
+    description: 'The UserCreate json object',
+    type: UserCreateDTO,
+    required: true,
+  })
   @Post()
   public async signUp(
     @Body() payload: UserCreateDTO
@@ -42,7 +48,7 @@ export class UserController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get informations of an user' })
+  @ApiOperation({ summary: 'Get information of an user' })
   @ApiResponse({
     status: 200,
     type: UserResponseDTO,
