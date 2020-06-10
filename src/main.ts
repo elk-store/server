@@ -23,6 +23,7 @@ async function bootstrap() {
     .addTag('Auth', 'User authentication')
     .addTag('User', 'User management')
     .addTag('Address', 'Address management')
+    .addTag('Products', 'Products management')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

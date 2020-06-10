@@ -10,6 +10,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
 import { RequiredRoles } from '../../core/auth/required-roles.decorator';
 import { UserRole } from '../user/user.interface';
@@ -17,6 +18,7 @@ import { ProductDTO } from './product.dto';
 import { Product } from './product.entity';
 import { ProductService } from './product.service';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}
