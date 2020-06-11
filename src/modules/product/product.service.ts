@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { plainToClass } from 'class-transformer';
 import { Repository, DeleteResult } from 'typeorm';
 
-import { ProductDTO } from './product.dto';
+import { ProductCreateDTO } from './dtos/product-create.dto';
 import { Product } from './product.entity';
 
 @Injectable()
@@ -21,12 +21,12 @@ export class ProductService {
     return this.productRepository.findOneOrFail(id);
   }
 
-  public create(productRequest: ProductDTO): Promise<Product> {
+  public create(productRequest: ProductCreateDTO): Promise<Product> {
     const product = plainToClass(Product, productRequest);
     return this.productRepository.save(product);
   }
 
-  public update(productRequest: ProductDTO, id: string): Promise<Product> {
+  public update(productRequest: ProductCreateDTO, id: string): Promise<Product> {
     const product = plainToClass(Product, productRequest);
     product.id = id;
     return this.productRepository.save(product);

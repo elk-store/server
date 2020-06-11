@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Repository } from 'typeorm';
 
-import { UserDTO } from './user.dto';
+import { UserCreateDTO } from './dtos/user-create.dto';
 import { User } from './user.entity';
 import { UserRole, Status } from './user.interface';
 
@@ -13,7 +13,7 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>
   ) {}
 
-  public async signUp(payload: UserDTO): Promise<User> {
+  public async signUp(payload: UserCreateDTO): Promise<User> {
     const user = new User();
 
     user.email = payload.email;

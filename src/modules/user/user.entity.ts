@@ -1,5 +1,4 @@
 import * as bcrypt from 'bcryptjs';
-import { Exclude } from 'class-transformer';
 import {
   Entity,
   BaseEntity,
@@ -22,11 +21,9 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   public email: string;
 
-  @Exclude()
   @Column()
   public salt: string;
 
-  @Exclude()
   @Column()
   public password: string;
 
