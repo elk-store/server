@@ -11,7 +11,7 @@ export class UserPayment {
   public name: string;
 
   @Column()
-  public cardNumber: number;
+  public cardNumber: string;
 
   @Column()
   public expireAt: Date;
