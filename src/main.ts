@@ -24,6 +24,7 @@ async function bootstrap() {
     .addTag('User', 'User management')
     .addTag('Address', 'Address management')
     .addTag('Products', 'Products management')
+    .addTag('Payments', 'Payment methods management')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

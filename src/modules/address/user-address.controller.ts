@@ -106,15 +106,43 @@ export class UserAddressController {
     summary: 'Get information about all created address of the logged user',
   })
   @UseGuards(AuthGuard())
-  @ApiQuery({ name: 'street', description: 'Search by street name' })
-  @ApiQuery({ name: 'number', description: 'Search by street number' })
-  @ApiQuery({ name: 'cep', description: 'Search by CEP number' })
-  @ApiQuery({ name: 'city', description: 'Search by city name' })
-  @ApiQuery({ name: 'district', description: 'Search by district name' })
-  @ApiQuery({ name: 'state', description: 'Search by state name' })
-  @ApiQuery({ name: 'order', description: 'Ordination' })
-  @ApiQuery({ name: 'page', description: 'Page start number' })
-  @ApiQuery({ name: 'limit', description: 'Page limit number' })
+  @ApiQuery({
+    name: 'street',
+    description: 'Search by street name',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'number',
+    description: 'Search by street number',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'cep',
+    description: 'Search by CEP number',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'city',
+    description: 'Search by city name',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'district',
+    description: 'Search by district name',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'state',
+    description: 'Search by state name',
+    required: false,
+  })
+  @ApiQuery({ name: 'order', description: 'Ordination', required: false })
+  @ApiQuery({ name: 'page', description: 'Page start number', required: false })
+  @ApiQuery({
+    name: 'limit',
+    description: 'Page limit number',
+    required: false,
+  })
   @Get()
   public async index(
     @Session() user: JwtPayload,
