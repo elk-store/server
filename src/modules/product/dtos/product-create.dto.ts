@@ -37,14 +37,14 @@ export class ProductCreateDTO {
     required: false,
   })
   @IsDefined()
-  public tags: Set<string>;
+  public tags: string[];
 
   @ApiProperty({
     description: "The product's pictures (Links)",
     required: true,
   })
   @IsDefined()
-  public pictures: Set<string>;
+  public pictures: string[];
 
   @ApiProperty({
     description: "The product's sizes",
@@ -52,5 +52,5 @@ export class ProductCreateDTO {
     required: true,
   })
   @IsEnum(Size, { each: true })
-  public size: Set<string>;
+  public sizes: Size[];
 }
