@@ -3,10 +3,11 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
+import { version } from '../package.json';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   const configService = app.get(ConfigService);
 
   app.useGlobalPipes(
@@ -17,8 +18,8 @@ async function bootstrap() {
   );
 
   const options = new DocumentBuilder()
-    .setTitle('Elk. Store')
-    .setVersion('1.0')
+    .setTitle('elk. Store')
+    .setVersion(version)
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
     .addTag('Auth', 'User authentication')
     .addTag('User', 'User management')
