@@ -31,7 +31,7 @@ export class Product extends BaseEntity {
   public pictures: string[];
 
   @Column('simple-array')
-  public sizes: number[];
+  public sizes: string[];
 
   @CreateDateColumn()
   public createdAt: Date;

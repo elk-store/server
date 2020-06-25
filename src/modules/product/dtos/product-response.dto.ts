@@ -5,7 +5,6 @@ import { Size } from '../product.interface';
 
 @Exclude()
 export class ProductResponseDTO {
-
   @ApiProperty({
     description: 'The product unique id',
   })
@@ -43,26 +42,26 @@ export class ProductResponseDTO {
   readonly tags: string[];
 
   @ApiProperty({
-    description: 'The product\'s pictures (Links)',
+    description: "The product's pictures (Links)",
   })
   @Expose()
   readonly pictures: string[];
 
   @ApiProperty({
-    description: 'The product\'s available sizes',
-    enum: Size
+    description: "The product's available sizes",
+    enum: Size,
   })
   @Expose()
   readonly sizes: number[];
 
   @ApiProperty({
-    description: 'The product created date'
+    description: 'The product created date',
   })
   @Expose()
   readonly createdAt: Date;
 
   @ApiProperty({
-    description: 'The product last update date'
+    description: 'The product last update date',
   })
   @Expose()
   readonly updatedAt: Date;

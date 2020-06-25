@@ -185,7 +185,7 @@ export class ProductController {
   @UseGuards(AuthGuard())
   @RequiredRoles(UserRole.ADMINISTRATOR)
   @Delete(':id')
-  delete(@Param('id', ParseUUIDPipe) id: string): Promise<DeleteResult> {
+  public delete(@Param('id', ParseUUIDPipe) id: string): Promise<DeleteResult> {
     return this.productService.delete(id);
   }
 }
