@@ -78,7 +78,7 @@ export class AuthService {
 
   public async verifyCodeAndChangePassword(code: string, password: string) {
     const email = this.getEmailByCode(code);
-    if (email !== undefined) {
+    if (!email) {
       PasswordRecoveryCache.list[email] = undefined;
       await this.userService.changePassword(email, password).then(() => {
         throw new HttpException('Password changed', HttpStatus.OK);
