@@ -65,7 +65,8 @@ export class AuthService {
           user.name +
           '\n\nUse this code to reset your password: ' +
           code +
-          '\n\nCopy the recovery code into this page: RECOVERY_PAGE',
+          '\n\nCopy the recovery code into this page: ' +
+          this.configService.get('RECOVERY_PAGE'),
       };
 
       await mailgun.messages().send(data);
