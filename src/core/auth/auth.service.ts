@@ -44,11 +44,7 @@ export class AuthService {
   public async sendRecoveryPasswordEmail(email: string) {
     const user = await this.userService.findByEmail(email);
 
-    if (
-      user !== null &&
-      user !== undefined &&
-      PasswordRecoveryCache.list[email] === undefined
-    ) {
+    if (!user && !PasswordRecoveryCache.list[email]) {
       const API_KEY = this.configService.get('MAILGUN_API_KEY');
       const DOMAIN = this.configService.get('MAILGUN_DOMAIN');
       // eslint-disable-next-line @typescript-eslint/no-var-requires
