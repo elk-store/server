@@ -29,6 +29,14 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  public async changePassword(email: string, password: string): Promise<User> {
+    const user = await this.findByEmail(email);
+
+    user.password = await this.hashPassword(password, user.salt);
+
+    return this.userRepository.save(user);
+  }
+
   public findByEmail(email: string): Promise<User> {
     return this.userRepository.findOneOrFail({ email });
   }
