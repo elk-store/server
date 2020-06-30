@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToClass } from 'class-transformer';
+import { query } from 'express';
 import {
   IPaginationOptions,
   Pagination,
@@ -85,26 +86,18 @@ export class ProductService {
     }
 
     if (productSearch.tags !== null && productSearch.tags !== undefined) {
-      const searchTags = productSearch.tags
-        .map(tag => {
-          return '%' + tag + '%';
-        })
-        .join(',');
-
-      queryBuilder.andWhere('product.tags ilike :tags', {
-        tags: searchTags,
+      productSearch.tags.map(tag => {
+        queryBuilder.andWhere('product.tags ilike :tags', {
+          tags: '%' + tag + '%',
+        });
       });
     }
 
     if (productSearch.sizes !== null && productSearch.sizes !== undefined) {
-      const searchSizes = productSearch.sizes
-        .map(size => {
-          return '%' + size + '%';
-        })
-        .join(',');
-
-      queryBuilder.andWhere('product.sizes ilike :sizes', {
-        sizes: searchSizes,
+      productSearch.sizes.map(size => {
+        queryBuilder.andWhere('product.sizes ilike :sizes', {
+          sizes: '%' + size + '%',
+        });
       });
     }
 
